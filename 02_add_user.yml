@@ -9,7 +9,7 @@
         password: '!'
     - name: Add sysops user to the sudoers
       copy:
-        dest: "/etc/sudoers.d/devops"
+        dest: "/etc/sudoers.d/sysops"
         content: "sysops  ALL=(ALL)  NOPASSWD: ALL"
     - name: Deploy SSH Key
       authorized_key: 
