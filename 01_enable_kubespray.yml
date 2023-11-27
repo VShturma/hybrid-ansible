@@ -1,10 +1,10 @@
 ---
 
 - hosts: localhost
-    tasks: 
-      - name: Clone Kubespray
-        git:
-          repo: https://github.com/kubernetes-sigs/kubespray.git
-          dest: /kubespray
-          single_branch: yes
-          version: v2.23.0
+  tasks: 
+    - name: Clone Kubespray
+      git:
+        repo: https://github.com/kubernetes-sigs/kubespray.git
+        dest: /kubespray
+        single_branch: yes
+        version: v2.23.0
