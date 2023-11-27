@@ -1,5 +1,5 @@
 ---
 
-- hosts: ansible_master
+- hosts: localhost
   roles:
   - role: ansible_master
