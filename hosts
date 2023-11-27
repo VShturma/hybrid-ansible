@@ -1,2 +1,3 @@
-[ansible_master]
-localhost
+ansible_master:
+  hosts:
+    localhost:
