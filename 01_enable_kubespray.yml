@@ -1,6 +1,6 @@
 ---
 
-- name: Example clone of a single branch
+- name: Clone Kubespray
   git:
     repo: https://github.com/kubernetes-sigs/kubespray.git
     dest: /kubespray
