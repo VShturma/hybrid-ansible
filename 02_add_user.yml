@@ -6,7 +6,7 @@
       user:
         name: sysops
         shell: /bin/bash
-        password: "{{ devops_password }}"
+        password: '!'
     - name: Add sysops user to the sudoers
       copy:
         dest: "/etc/sudoers.d/devops"
