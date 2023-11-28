@@ -5,6 +5,6 @@
     - name: Clone Kubespray
       git:
         repo: https://github.com/kubernetes-sigs/kubespray.git
-        dest: /kubespray
+        dest: /ansible/external
         single_branch: yes
         version: v2.23.0
