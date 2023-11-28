@@ -4,14 +4,20 @@ all:
       ansible_host: 10.66.1.64
       ip: 10.66.1.64
       access_ip: 10.66.1.64
+      ansible_user: sysops
+      ansible_ssh_private_key_file: {{ node_ssh_private_key_file }}
     node2:
       ansible_host: 10.66.1.152
       ip: 10.66.1.152
       access_ip: 10.66.1.152
+      ansible_user: sysops
+      ansible_ssh_private_key_file: {{ node_ssh_private_key_file }}
     node3:
       ansible_host: 10.66.1.25
       ip: 10.66.1.25
       access_ip: 10.66.1.25
+      ansible_user: sysops
+      ansible_ssh_private_key_file: {{ node_ssh_private_key_file }}
   children:
     kube_control_plane:
       hosts:
