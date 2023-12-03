@@ -34,7 +34,7 @@
     - name: Deploy Authorized SSH Key
       authorized_key: 
         user: sysops
-        key: "{{ sysops_public_key.stdout }}"
+        key: "{{ sysops_public_key }}"
         state: present
     - name: Disable Password Authentication
       lineinfile:
