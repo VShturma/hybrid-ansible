@@ -14,7 +14,7 @@
     - name: Add private SSH key
       copy:
         dest: "/home/sysops/.ssh/id_ed25519"
-        content: "{{ ssm_sysops_private_key }}"
+        content: "{{ sysops_private_key }}"
         group: sysops
         owner: sysops
         mode: 0600
@@ -22,7 +22,7 @@
     - name: Deploy Authorized SSH Key
       authorized_key: 
         user: sysops
-        key: "{{ ssm_sysops_public_key }}"
+        key: "{{ sysops_public_key }}"
         state: present
     - name: Disable Password Authentication
       lineinfile:
