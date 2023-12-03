@@ -2,6 +2,12 @@
 
 - hosts: localhost
   tasks:
+    - name: lookup SSH private key
+      debug: msg="{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/ssh_private', region='us-west-2' ) }}"
+      register: sysops_private_key
+    - name: lookup SSH public key
+      debug: msg="{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/ssh_private', region='us-west-2' ) }}"
+      register: sysops_public_key
     - name: Add sysops user
       user:
         name: sysops
@@ -14,7 +20,7 @@
     - name: Add private SSH key
       copy:
         dest: "/home/sysops/.ssh/id_ed25519"
-        content: "{{ sysops_private_key }}"
+        content: sysops_private_key.stdout
         group: sysops
         owner: sysops
         mode: 0600
@@ -22,7 +28,7 @@
     - name: Deploy Authorized SSH Key
       authorized_key: 
         user: sysops
-        key: "{{ sysops_public_key }}"
+        key: sysops_public_key.stdout
         state: present
     - name: Disable Password Authentication
       lineinfile:
