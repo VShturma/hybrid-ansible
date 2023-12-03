@@ -6,7 +6,7 @@
       debug: msg="{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/ssh_private', region='us-west-2' ) }}"
       register: sysops_private_key
     - name: lookup SSH public key
-      debug: msg="{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/ssh_private', region='us-west-2' ) }}"
+      debug: msg="{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/ssh_public', region='us-west-2' ) }}"
       register: sysops_public_key
     - name: Add sysops user
       user:
