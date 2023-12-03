@@ -8,3 +8,7 @@
         dest: /ssm/external/kubespray
         single_branch: yes
         version: v2.23.0
+    - name: Install dependencies
+      command:
+        chdir: /ssm/external/kubespray/
+        cmd: pip install -r requirements.txt
