@@ -27,7 +27,7 @@
     - name: Add private SSH key
       copy:
         dest: "/home/sysops/.ssh/id_ed25519"
-        content: sysops_private_key.stdout
+        content: "{{ sysops_private_key.msg }}"
         group: sysops
         owner: sysops
         mode: 0600
