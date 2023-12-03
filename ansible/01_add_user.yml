@@ -20,6 +20,7 @@
     - name: Create .ssh directory
       copy:
         dest: "/home/sysops/.ssh/"
+        state: directory
         group: sysops
         owner: sysops
         directory_mode: 0700
