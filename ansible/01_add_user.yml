@@ -18,12 +18,12 @@
         dest: "/etc/sudoers.d/sysops"
         content: "sysops  ALL=(ALL)  NOPASSWD: ALL"
     - name: Create .ssh directory
-      copy:
-        dest: "/home/sysops/.ssh/"
+      file:
+        path: "/home/sysops/.ssh/"
         state: directory
         group: sysops
         owner: sysops
-        directory_mode: 0700
+        mode: 0700
     - name: Add private SSH key
       copy:
         dest: "/home/sysops/.ssh/id_ed25519"
