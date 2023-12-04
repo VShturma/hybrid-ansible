@@ -14,7 +14,7 @@
         cmd: pip install -r requirements.txt
     - name: Copy inventory folder
       copy:
-        src: inventory/sample
+        remote_src: inventory/sample
         dest: inventory/mycluster
         force: false
     - name: Specify node IPs
