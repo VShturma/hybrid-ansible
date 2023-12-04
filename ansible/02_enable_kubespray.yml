@@ -18,11 +18,6 @@
         remote_src: true
         dest: /ssm/external/kubespray/inventory/mycluster/
         force: false
-        directory_mode: preserve
-#    - name: Specify node IPs
-#      shell: /bin/bash declare -a IPS=(10.66.1.164 10.66.1.152 10.66.1.25)
-#      args:
-#        chdir: /ssm/external/kubespray/
     - name: Build inventory
       shell: CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inventory.py 10.66.1.164 10.66.1.152 10.66.1.25
       args:
