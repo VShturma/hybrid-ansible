@@ -17,7 +17,7 @@
         src: /ssm/external/kubespray/inventory/sample/
         remote_src: true
         dest: /ssm/external/kubespray/inventory/mycluster/
-        force: false
+        force: true
         mode: preserve
     - name: Build inventory
       shell: CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inventory.py 10.66.1.164 10.66.1.152 10.66.1.25
