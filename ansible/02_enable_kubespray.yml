@@ -12,3 +12,16 @@
       command:
         chdir: /ssm/external/kubespray/
         cmd: pip install -r requirements.txt
+    - name: Copy inventory folder
+      copy:
+        src: inventory/sample
+        dest: inventory/mycluster
+        force: false
+    - name: Specify node IPs
+      command:
+        chdir: /ssm/external/kubespray/
+        cmd: declare -a IPS=(10.66.1.164 10.66.1.152 10.66.1.25)
+    - name: Build inventory
+      command:
+        chdir: /ssm/external/kubespray/
+        cmd: CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inventory.py ${IPS[@]}
