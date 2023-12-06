@@ -1,0 +1,30 @@
+---
+
+- hosts: localhost
+  tasks:
+    - name: create partition for local cache
+      parted:
+        device: /dev/nvme1n1
+        number: 30
+        flags: [ lvm ]
+        state: present
+        part_end: 150GiB
+    - name: create partition for distributed cache
+      parted:
+        device: /dev/nvme1n1
+        number: 31
+        flags: [ lvm ]
+        state: present
+        part_end: 100GiB 
+    - name: create volume group for local cache
+      lvg:
+        vg: csi-lvm-local-cache
+        pvs: /dev/sda30
+    - name: create volume group for distributed cache
+      lvg:
+        vg: csi-lvm-distributed-cache
+        pvs: /dev/sda31
+    - name: Install lvm2 dependency
+      package:
+        name: lvm2
+        state: present
