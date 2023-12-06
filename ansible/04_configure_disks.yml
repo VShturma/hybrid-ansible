@@ -15,7 +15,7 @@
         number: 31
         flags: [ lvm ]
         state: present
-        part_end: 100GiB 
+        part_start: 150GiB 
     - name: create volume group for local cache
       lvg:
         vg: csi-lvm-local-cache
