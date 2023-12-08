@@ -1,3 +1,11 @@
+#local_cache_disk:
+#  name: /dev/nvme1n1p1
+#  partition: 1
+#  size: 150GiB
+#distributed_cache_disks:
+#  - name: /dev/nvme1n1p1
+#    partition: 2
+#    size: 100%
 ---
 
 - hosts: localhost
@@ -5,26 +13,27 @@
     - name: create partition for local cache
       parted:
         device: "{{ local_cache_disk.name }}"
-        number: 1
+        number: "{{ local_cache_disk.partition | default(1) }}"
         flags: [ lvm ]
         state: present
-        part_end: "{{ local_cache_disk.size }}"
-    - name: create partition for distributed cache
+        part_end: "{{ local_cache_disk.size | default('150GiB')}}"
+    - name: create partitions for distributed cache
       parted:
-        device: "{{ distributed_cache_disks.name }}"
-        number: 2
+        device: "{{ item.name }}"
+        number: "{{ item.partition }}"
         flags: [ lvm ]
         state: present
         part_start: "{{ local_cache_disk.size }}"
-        part_end: 100%
+        part_end: "{{ item.size | default('100%')}}"
+      loop: "{{ distributed_cache_disks }}"
     - name: create volume group for local cache
       lvg:
         vg: csi-lvm-local-cache
-        pvs: /dev/nvme1n1p1
+        pvs: "{{ local_cache_disk.name }}"
     - name: create volume group for distributed cache
       lvg:
         vg: csi-lvm-distributed-cache
-        pvs: /dev/nvme1n1p2
+        pvs: "{{ distributed_cache_disks[*]['name'] }}"
     - name: Install lvm2 dependency
       package:
         name: lvm2
