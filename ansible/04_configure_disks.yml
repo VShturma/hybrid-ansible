@@ -11,7 +11,7 @@
         part_end: "{{ local_cache_disk.size }}"
     - name: create partition for distributed cache
       parted:
-        device: "{{ distributed_cache_disks }}"
+        device: "{{ distributed_cache_disks.name }}"
         number: 2
         flags: [ lvm ]
         state: present
