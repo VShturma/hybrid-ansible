@@ -20,7 +20,7 @@
     - name: create volume group for local cache
       lvg:
         vg: csi-lvm-local-cache
-        pvs: /dev/nvme1n1p2
+        pvs: /dev/nvme1n1p1
     - name: create volume group for distributed cache
       lvg:
         vg: csi-lvm-distributed-cache
