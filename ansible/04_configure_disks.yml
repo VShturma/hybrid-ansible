@@ -4,18 +4,18 @@
   tasks:
     - name: create partition for local cache
       parted:
-        device: {{ local_cache_disk.name }}
+        device: "{{ local_cache_disk.name }}"
         number: 1
         flags: [ lvm ]
         state: present
-        part_end: {{ local_cache_disk.size }}
+        part_end: "{{ local_cache_disk.size }}"
     - name: create partition for distributed cache
       parted:
-        device: {{ distributed_cache_disks }}
+        device: "{{ distributed_cache_disks }}"
         number: 2
         flags: [ lvm ]
         state: present
-        part_start: {{ local_cache_disk.size }}
+        part_start: "{{ local_cache_disk.size }}"
         part_end: 100%
     - name: create volume group for local cache
       lvg:
