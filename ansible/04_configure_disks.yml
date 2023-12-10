@@ -17,6 +17,7 @@
         flags: [ lvm ]
         state: present
         part_end: "{{ local_cache_disk.size | default('150GiB')}}"
+      register: local_cache_partition
     - name: create partitions for distributed cache
       parted:
         device: "{{ item.name }}"
@@ -26,14 +27,21 @@
         part_start: "{{ local_cache_disk.size }}"
         part_end: "{{ item.size | default('100%')}}"
       loop: "{{ distributed_cache_disks }}"
+      register: distributed_cache_partitions
     - name: Display disks
       debug:
         msg: "{{ item.name }}"
       loop: "{{ distributed_cache_disks | flatten(1) }}"
+    - name: Display local cache partition
+      debug:
+        msg: "{{ local_cache_partition}}"
+    - name: Display distributed cache partitions
+      debug:
+        msg: "{{ distributed_cache_partitions}}"
     - name: create volume group for local cache
       lvg:
         vg: csi-lvm-local-cache
-        pvs: "{{ local_cache_disk.name }}"
+        pvs: "{{ local_cache_disk.name }}{{ }}"
     - name: create volume group for distributed cache
       lvg:
         vg: csi-lvm-distributed-cache
