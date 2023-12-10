@@ -26,6 +26,11 @@
         part_start: "{{ local_cache_disk.size }}"
         part_end: "{{ item.size | default('100%')}}"
       loop: "{{ distributed_cache_disks }}"
+    - name: Display disks
+      debug:
+        msg: "{{ item.name }}"
+      with_items:
+        - "{{ distributed_cache_disks }}"
     - name: create volume group for local cache
       lvg:
         vg: csi-lvm-local-cache
