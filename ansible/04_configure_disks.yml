@@ -29,8 +29,7 @@
     - name: Display disks
       debug:
         msg: "{{ item.name }}"
-      with_items:
-        - "{{ distributed_cache_disks }}"
+      loop: "{{ distributed_cache_disks | flatten(1) }}"
     - name: create volume group for local cache
       lvg:
         vg: csi-lvm-local-cache
@@ -38,7 +37,8 @@
     - name: create volume group for distributed cache
       lvg:
         vg: csi-lvm-distributed-cache
-        pvs: "{{ distributed_cache_disks[*]['name'] }}"
+        pvs: "{{ item.name }}"
+      loop: "{{ distributed_cache_disks | flatten(1) }}"
     - name: Install lvm2 dependency
       package:
         name: lvm2
