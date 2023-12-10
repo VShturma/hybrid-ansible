@@ -38,6 +38,7 @@
       lvg:
         vg: csi-lvm-distributed-cache
         pvs: "{{ item.name }}"
+        state: present
       loop: "{{ distributed_cache_disks | flatten(1) }}"
     - name: Install lvm2 dependency
       package:
