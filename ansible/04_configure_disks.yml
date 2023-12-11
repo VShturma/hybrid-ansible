@@ -1,11 +1,3 @@
-#local_cache_disk:
-#  name: /dev/nvme1n1p1
-#  partition: 1
-#  size: 150GiB
-#distributed_cache_disks:
-#  - name: /dev/nvme1n1p1
-#    partition: 2
-#    size: 100%
 ---
 
 - hosts: localhost
@@ -28,10 +20,6 @@
         part_end: "{{ item.part_end | default('100%')}}"
       loop: "{{ distributed_cache_disks }}"
       register: distributed_cache_partitions
-   # - name: Create a list of distributed cache partitions
-   #   set_fact:
-   #     distrib_partition_list = "{{ distrib_partition_list|default([]) + [~ item.item.device ~ 'p' ~ item.item.number ~] }}"
-   #   loop: "{{ distributed_cache_partitions.results }}"
     - set_fact:
         distrib_partitions_list: |-
           [
