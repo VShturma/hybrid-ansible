@@ -34,7 +34,7 @@
       loop: "{{ distributed_cache_disks | flatten(1) }}"
     - name: Display local cache partition
       debug:
-        msg: "{{ local_cache_partition.partitions[0].num }}"
+        msg: "{{ local_cache_partition.disk.dev }}p{{ local_cache_partition.partitions[0].num }}"
     - name: Display distributed cache partitions
       debug:
         msg: "{{ distributed_cache_partitions}}"
