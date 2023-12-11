@@ -41,7 +41,7 @@
           ]
     - name: Display distributed cache partitions
       debug:
-        msg: var=distrib_partitions_list
+        var: distrib_partitions_list
     - name: create volume group for local cache
       lvg:
         vg: csi-lvm-local-cache
