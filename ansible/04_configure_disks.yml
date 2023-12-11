@@ -38,7 +38,7 @@
     - name: create volume group for distributed cache
       lvg:
         vg: csi-lvm-distributed-cache
-        pvs: "{{ distributed_cache_partitions.results.disk.dev }}p{{ distributed_cache_partitions.results.partitions[1].num }}"
+        pvs: "{{ distributed_cache_partitions.results[0].item.name }}p{{ distributed_cache_partitions.results[0].item.partition }}"
         state: present
     - name: Install lvm2 dependency
       package:
