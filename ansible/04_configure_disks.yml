@@ -32,9 +32,16 @@
       set_fact:
         distrib_partition_list = "{{ distrib_partition_list|default([]) + [~ item.item.device ~ 'p' ~ item.item.number ~] }}"
       loop: "{{ distributed_cache_partitions.results }}"
+    - set_fact:
+        distrib_partitions_list: |-
+          [
+          {% for partition in distributed_cache_partitions.results %}
+            "{{ partition.item.device}}p{{ partition.item.number }}",
+          {% endfor %}
+          ]
     - name: Display distributed cache partitions
       debug:
-        msg: var=distrib_partition_list
+        msg: var=distrib_partitions_list
     - name: create volume group for local cache
       lvg:
         vg: csi-lvm-local-cache
