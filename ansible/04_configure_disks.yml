@@ -28,10 +28,13 @@
         part_end: "{{ item.part_end | default('100%')}}"
       loop: "{{ distributed_cache_disks }}"
       register: distributed_cache_partitions
+    - name: Create a list of distributed cache partitions
+      set_fact:
+        distrib_partition_list = "{{ distrib_partition_list|default([]) + [~ item.item.device ~ 'p' ~ item.item.number ~] }}"
+      loop: "{{ distributed_cache_partitions.results }}"
     - name: Display distributed cache partitions
       debug:
-        msg: "{{ item.item.device }}p{{ item.item.number }}"
-      loop: "{{ distributed_cache_partitions.results }}"
+        msg: var=distrib_partition_list
     - name: create volume group for local cache
       lvg:
         vg: csi-lvm-local-cache
