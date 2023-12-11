@@ -12,20 +12,20 @@
   tasks:
     - name: create partition for local cache
       parted:
-        device: "{{ local_cache_disk.name }}"
-        number: "{{ local_cache_disk.partition | default(1) }}"
+        device: "{{ local_cache_disk.device }}"
+        number: "{{ local_cache_disk.number | default(1) }}"
         flags: [ lvm ]
         state: present
-        part_end: "{{ local_cache_disk.size | default('150GiB')}}"
+        part_end: "{{ local_cache_disk.part_end }}"
       register: local_cache_partition
     - name: create partitions for distributed cache
       parted:
-        device: "{{ item.name }}"
-        number: "{{ item.partition }}"
+        device: "{{ item.device }}"
+        number: "{{ item.number }}"
         flags: [ lvm ]
         state: present
-        part_start: "{{ local_cache_disk.size }}"
-        part_end: "{{ item.size | default('100%')}}"
+        part_start: "{{ item.part_start }}"
+        part_end: "{{ item.part_end | default('100%')}}"
       loop: "{{ distributed_cache_disks }}"
       register: distributed_cache_partitions
     - name: Display distributed cache partitions
