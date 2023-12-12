@@ -8,23 +8,6 @@
     - name: lookup SSH public key
       debug: msg="{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/ssh_public', region='us-west-2' ) }}"
       register: sysops_public_key
-    - name: lookup CA certificate
-      debug: msg="{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/ca.crt', region='us-west-2' ) }}"
-      register: ca_crt
-    - name: Create ssl directory
-      file:
-        path: "/etc/kubernetes/ssl/"
-        state: directory
-        group: root
-        owner: root
-        mode: 0755
-    - name: Add ca.crt file
-      copy:
-        dest: "/etc/kubernetes/ssl/ca.crt"
-        content: "{{ ca_crt.msg }}"
-        group: root
-        owner: root
-        mode: 0644
     - name: Add sysops user
       user:
         name: sysops
