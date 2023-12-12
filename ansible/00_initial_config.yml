@@ -51,7 +51,7 @@
         state: directory
         group: root
         owner: root
-        mode: 0700
+        mode: 0755
     - name: Copy private SSH key ssm folder
       copy:
         dest: "/ssm/ssh_key"
