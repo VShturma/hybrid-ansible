@@ -17,30 +17,44 @@
       copy:
         dest: "/etc/sudoers.d/sysops"
         content: "sysops  ALL=(ALL)  NOPASSWD: ALL"
-    - name: Create sysops .ssh directory
+#    - name: Create sysops .ssh directory
+#      file:
+#        path: "/home/sysops/.ssh/"
+#        state: directory
+#        group: sysops
+#        owner: sysops
+#        mode: 0700
+#    - name: Add private sysops SSH key to sysops user
+#      copy:
+#        dest: "/home/sysops/.ssh/id_ed25519"
+#        content: "{{ sysops_private_key.msg }}"
+#        group: sysops
+#        owner: sysops
+#        mode: 0600
+#    - name: Create root .ssh directory
+#      file:
+#        path: "/root/.ssh/"
+#        state: directory
+#        group: root
+#        owner: root
+#        mode: 0700
+#    - name: Add private sysops SSH key to root user
+#      copy:
+#        dest: "/root/.ssh/id_ed25519"
+#        content: "{{ sysops_private_key.msg }}"
+#        group: root
+#        owner: root
+#        mode: 0600
+    - name: Create ssm directory
       file:
-        path: "/home/sysops/.ssh/"
-        state: directory
-        group: sysops
-        owner: sysops
-        mode: 0700
-    - name: Add private sysops SSH key to sysops user
-      copy:
-        dest: "/home/sysops/.ssh/id_ed25519"
-        content: "{{ sysops_private_key.msg }}"
-        group: sysops
-        owner: sysops
-        mode: 0600
-    - name: Create root .ssh directory
-      file:
-        path: "/root/.ssh/"
+        path: "/ssm"
         state: directory
         group: root
         owner: root
         mode: 0700
-    - name: Add private sysops SSH key to root user
+    - name: Copy private SSH key ssm folder
       copy:
-        dest: "/root/.ssh/id_ed25519"
+        dest: "/ssm/ssh_key"
         content: "{{ sysops_private_key.msg }}"
         group: root
         owner: root
