@@ -7,18 +7,18 @@
         url: https://nvidia.github.io/libnvidia-container/gpgkey
         state: present
         keyring: /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
-    - name: Add specified repository into sources list using specified filename
-      apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /"
-        state: present
-        filename: nvidia-container-toolkit
-   # - name: Create list file
-   #   copy:
-   #     dest: "/etc/apt/sources.list.d/nvidia-container-toolkit.list"
-   #     content: ""
-   #     group: root
-   #     owner: root
-   #     mode: 0600
+   # - name: Add specified repository into sources list using specified filename
+   #   apt_repository:
+   #     repo: "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /"
+   #     state: present
+   #     filename: nvidia-container-toolkit
+    - name: Create list file
+      copy:
+        dest: "/etc/apt/sources.list.d/nvidia-container-toolkit.list"
+        content: "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /"
+        group: root
+        owner: root
+        mode: 0644
     - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
       apt:
         name: nvidia-container-toolkit=1.14.2
