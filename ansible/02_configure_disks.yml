@@ -7,11 +7,6 @@
         url: https://nvidia.github.io/libnvidia-container/gpgkey
         state: present
         keyring: /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
-   # - name: Add specified repository into sources list using specified filename
-   #   apt_repository:
-   #     repo: "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /"
-   #     state: present
-   #     filename: nvidia-container-toolkit
     - name: Create list file
       copy:
         dest: "/etc/apt/sources.list.d/nvidia-container-toolkit.list"
@@ -28,7 +23,28 @@
       apt:
         name: nvidia-container-toolkit=1.14.2-1
         state: present
-        update_cache: yes
+    - name: Install linux headers
+      apt:
+        name: "linux-headers-{{ ansible_kernel }}"
+        state: present
+ #   - name: Install cuda drivers keyring
+ #     apt:
+ #       deb: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb
+ #       state: present
+ #   - name: Install cuda drivers
+ #     apt:
+ #       name: cuda-drivers=1.14.2-1
+ #       state: present
+ #       update_cache: yes
+    - name: Copy containerd config
+      copy:
+        src: /ssm/external/ansible/containerd.config
+        remote_src: true
+        dest: /etc/containerd/config.toml
+        force: true
+        mode: preserve
+      notify:
+        - restart containerd
     - name: create partition for local cache
       parted:
         device: "{{ local_cache_disk.device }}"
@@ -90,3 +106,8 @@
       package:
         name: lvm2
         state: present
+  handlers:
+    - name: restart containerd
+      service:
+        name=containerd
+        state=restarted
