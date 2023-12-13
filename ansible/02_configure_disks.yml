@@ -1,6 +1,6 @@
 ---
 
-- hosts: localhost
+- hosts: all
   tasks:
     - name: create partition for local cache
       parted:
@@ -27,6 +27,9 @@
             "{{ partition.item.device}}p{{ partition.item.number }}",
           {% endfor %}
           ]
+    - name: Display local cache partitions
+      debug:
+        var: local_cache_partition
     - name: Display distributed cache partitions
       debug:
         var: distrib_partitions_list
