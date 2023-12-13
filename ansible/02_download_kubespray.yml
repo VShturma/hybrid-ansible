@@ -7,7 +7,7 @@
         repo: https://github.com/kubernetes-sigs/kubespray.git
         dest: /ssm/external/kubespray
         single_branch: yes
-        version: v2.23.0
+        version: v2.22.0
     - name: Install dependencies
       command:
         chdir: /ssm/external/kubespray/
