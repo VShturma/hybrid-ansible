@@ -24,7 +24,7 @@
         name: nvidia-container-toolkit=1.14.2
         state: present
         update_cache: yes
-        cache_valid_time: 3600
+    #    cache_valid_time: 3600
     - name: create partition for local cache
       parted:
         device: "{{ local_cache_disk.device }}"
