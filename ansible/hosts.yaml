@@ -48,6 +48,7 @@ all:
       ip: 10.20.74.182
       access_ip: 10.20.74.182
       ansible_user: sysops
+      ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
       local_cache_disk:
         device: /dev/sdb
         number: 1
