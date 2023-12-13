@@ -39,7 +39,6 @@
     - name: Copy containerd config
       copy:
         src: /ssm/external/ansible/containerd.config
-        remote_src: true
         dest: /etc/containerd/config.toml
         force: true
         mode: preserve
