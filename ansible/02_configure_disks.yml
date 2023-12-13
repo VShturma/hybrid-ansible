@@ -21,7 +21,7 @@
         mode: 0644
     - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
       apt:
-        name: nvidia-container-toolkit=1.14.2
+        name: nvidia-container-toolkit=1.14.2-1
         state: present
         update_cache: yes
     #    cache_valid_time: 3600
