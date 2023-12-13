@@ -43,6 +43,21 @@ all:
         - device: /dev/nvme0n1
           number: 2
           part_start: 150GiB
+    node8:
+      ansible_host: 10.20.74.182
+      ip: 10.20.74.182
+      access_ip: 10.20.74.182
+      ansible_user: sysops
+      local_cache_disk:
+        device: /dev/sdb
+        number: 1
+        part_end: 150GiB
+      distributed_cache_disks:
+        - device: /dev/sdb
+          number: 2
+          part_start: 150GiB
+        - device: /dev/sdc
+          number: 1
   children:
     kube_control_plane:
       hosts:

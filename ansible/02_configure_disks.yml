@@ -20,23 +20,40 @@
         part_end: "{{ item.part_end | default('100%')}}"
       loop: "{{ distributed_cache_disks }}"
       register: distributed_cache_partitions
-    - set_fact:
+    - name: merge distributed cache partitions into a single list SSD 
+      set_fact:
+        distrib_partitions_list: |-
+          [
+          {% for partition in distributed_cache_partitions.results %}
+            "{{ partition.item.device}}{{ partition.item.number }}",
+          {% endfor %}
+          ]
+      when: '"/dev/sd" in local_cache_disk.device'
+    - name: merge distributed cache partitions into a single list NVME 
+      set_fact:
         distrib_partitions_list: |-
           [
           {% for partition in distributed_cache_partitions.results %}
             "{{ partition.item.device}}p{{ partition.item.number }}",
           {% endfor %}
           ]
+      when: '"nvme" in local_cache_disk.device'
     - name: Display local cache partitions
       debug:
         var: local_cache_partition
     - name: Display distributed cache partitions
       debug:
         var: distrib_partitions_list
-    - name: create volume group for local cache
+    - name: create volume group for local cache SSD
+      lvg:
+        vg: csi-lvm-local-cache
+        pvs: "{{ local_cache_partition.disk.dev }}{{ local_cache_partition.partitions[0].num }}"
+      when: '"/dev/sd" in local_cache_disk.device'
+    - name: create volume group for local cache NVME
       lvg:
         vg: csi-lvm-local-cache
         pvs: "{{ local_cache_partition.disk.dev }}p{{ local_cache_partition.partitions[0].num }}"
+      when: '"nvme" in local_cache_disk.device'
     - name: create volume group for distributed cache
       lvg:
         vg: csi-lvm-distributed-cache
