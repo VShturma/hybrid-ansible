@@ -15,16 +15,20 @@
     - name: Create list file
       copy:
         dest: "/etc/apt/sources.list.d/nvidia-container-toolkit.list"
-        content: "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /"
+        content: "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) / \n"
         group: root
         owner: root
         mode: 0644
-    - name: Only run "update_cache=yes" if the last one is more than 3600 seconds ago
+    - name: Install nvidia-container-toolkit-base
+      apt:
+        name: nvidia-container-toolkit-base=1.14.2-1
+        state: present
+        update_cache: yes
+    - name: Install nvidia-container-toolkit
       apt:
         name: nvidia-container-toolkit=1.14.2-1
         state: present
         update_cache: yes
-    #    cache_valid_time: 3600
     - name: create partition for local cache
       parted:
         device: "{{ local_cache_disk.device }}"
