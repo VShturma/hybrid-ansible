@@ -53,3 +53,32 @@
         dest: /ssm/external/kubespray/inventory/mycluster/
         force: true
         mode: preserve
+    - name: Copy hosts file
+      copy:
+        src: ansible/hosts.yaml
+        remote_src: true
+        dest: kubespray/inventory/mycluster/hosts.yaml
+        force: true
+        mode: preserve
+    - name: Copy addons file
+      copy:
+        src: ansible/addons.yml
+        remote_src: true
+        dest: kubespray/inventory/mycluster/group_vars/k8s_cluster/addons.yml
+        force: true
+        mode: preserve
+    - name: Copy k8s cluster vars file
+      copy:
+        src: ansible/k8s-cluster.yml
+        remote_src: true
+        dest: kubespray/inventory/mycluster/group_vars/k8s_cluster/k8s-cluster.yml
+        force: true
+        mode: preserve
+    - name: Copy all vars file
+      copy:
+        src: ansible/all.yml
+        remote_src: true
+        dest: kubespray/inventory/mycluster/group_vars/all/all.yml
+        force: true
+        mode: preserve
+    

@@ -4,3 +4,4 @@
       shell: "kubectl --kubeconfig /ssm/kubeconfig label node {{ inventory_hostname }} {{ item.key }}={{ item.value }}"
       loop: "{{ labels | dict2items }}"
       delegate_to: 127.0.0.1
+  
