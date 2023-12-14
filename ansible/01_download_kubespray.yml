@@ -1,7 +1,41 @@
 ---
 
 - hosts: localhost
+  vars:
+    k8s_ca_data: "{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_ca_data', region='us-west-2' ) }}"
+    k8s_client_cert_data: "{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_client_cert_data', region='us-west-2' ) }}"
+    k8s_client_key_data: "{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_client_key_data', region='us-west-2' ) }}"
+    k8s_host: "{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_host', region='us-west-2' ) }}"
+    k8s_user: "{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_user', region='us-west-2' ) }}"
   tasks: 
+    - name: Add kubeconfig config file
+      template:
+        dest: /ssm/kubeconfig
+        src: kubeconfig.j2
+        group: root
+        owner: root
+        mode: 0600
+    - name: Add an Apt signing key for kubectl
+      apt_key:
+        url: https://pkgs.k8s.io/core:/stable:/v1.26/deb/Release.key
+        state: present
+        keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    - name: Create list file for kubectl
+      copy:
+        dest: "/etc/apt/sources.list.d/kubernetes.list"
+        content: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.26/deb/ / \n"
+        group: root
+        owner: root
+        mode: 0644
+    - name: Install kubectl
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - kubectl
     - name: Clone Kubespray
       git:
         repo: https://github.com/kubernetes-sigs/kubespray.git
