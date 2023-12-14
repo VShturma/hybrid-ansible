@@ -39,6 +39,6 @@
     - name: Display local cache partitions
       debug:
         var: "{{ item }}"
-      loop: "{{ hostvars[node_to_label] | dict2items }}"
+      loop: "{{ hostvars[node_to_label][labels] | dict2items }}"
    # - name: Label node
    #   shell: "kubectl label node {{ node_to_label }} {{ hostvars[node_to_label][labels] }}"

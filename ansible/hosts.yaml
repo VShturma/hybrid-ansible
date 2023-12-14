@@ -44,6 +44,8 @@ all:
         - device: /dev/nvme0n1
           number: 2
           part_start: 150GiB
+      labels:
+        - gpu-model: nvidia-rtx-60
    # node8:
    #   ansible_host: 10.20.74.182
    #   ip: 10.20.74.182
