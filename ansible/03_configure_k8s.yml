@@ -29,7 +29,7 @@
         mode: 0644
     - name: Install kubectl
       apt:
-        name: {{ item }}
+        name: "{{ item }}"
         state: present
         update_cache: yes
       loop:
