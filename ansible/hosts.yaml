@@ -30,6 +30,7 @@ all:
       ip: 10.20.72.9
       access_ip: 10.20.72.9
       ansible_user: sysops
+
     node7:
       ansible_host: 10.20.75.62
       ip: 10.20.75.62
@@ -46,6 +47,11 @@ all:
           part_start: 150GiB
       labels:
         gpu-model: nvidia-rtx-60
+        gpu.brtws.com/family-nvidia-rtx-60: true
+        nvidia.com/gpu: true
+        storage.hybrid.brtws.com/lvm: true
+        tenant: mesa
+        
    # node8:
    #   ansible_host: 10.20.74.182
    #   ip: 10.20.74.182
