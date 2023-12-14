@@ -1,4 +1,4 @@
-- hosts: {{ node_to_label }}
+- hosts: "{{ node_to_label }}"
   tasks:
     - name: Label node
       shell: "kubectl --kubeconfig /ssm/kubeconfig label node {{ inventory_hostname }} {{ item.key }}={{ item.value }}"
