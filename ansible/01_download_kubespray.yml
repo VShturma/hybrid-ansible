@@ -81,4 +81,3 @@
         dest: /ssm/external/kubespray/inventory/mycluster/group_vars/all/all.yml
         force: true
         mode: preserve
-    
