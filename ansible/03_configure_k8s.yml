@@ -2,10 +2,10 @@
 
 - hosts: localhost
   vars:
-    k8s_ca_data: lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_ca_data', region='us-west-2' )
-    k8s_client_cert_data: lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_client_cert_data', region='us-west-2' )
-    k8s_client_key_data: lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_client_key_data', region='us-west-2' )
-    k8s_host: lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_host', region='us-west-2' )
+    k8s_ca_data: "{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_ca_data', region='us-west-2' ) }}"
+    k8s_client_cert_data: "{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_client_cert_data', region='us-west-2' ) }}"
+    k8s_client_key_data: "{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_client_key_data', region='us-west-2' ) }}"
+    k8s_host: "{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_host', region='us-west-2' ) }}"
   tasks:
   #  - name: lookup K8S CA DATA
   #    debug: msg="{{ lookup('amazon.aws.aws_ssm', '/test/hybrid/k8s_ca_data', region='us-west-2' ) }}"
@@ -21,5 +21,5 @@
   #    register: k8s_host
     - name: Add kubeconfig config file
       template:
-        dest: /ssm/external/kubeconfig
+        dest: /ssm/kubeconfig
         src: kubeconfig.j2
