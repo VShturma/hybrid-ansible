@@ -5,37 +5,31 @@ all:
       ip: 10.20.72.4
       access_ip: 10.20.72.4
       ansible_user: sysops
-      labels:
     node2:
       ansible_host: 10.20.72.5
       ip: 10.20.72.5
       access_ip: 10.20.72.5
       ansible_user: sysops
-      labels:
     node3:
       ansible_host: 10.20.72.6
       ip: 10.20.72.6
       access_ip: 10.20.72.6
       ansible_user: sysops
-      labels:
     node4:
       ansible_host: 10.20.72.7
       ip: 10.20.72.7
       access_ip: 10.20.72.7
       ansible_user: sysops
-      labels:
     node5:
       ansible_host: 10.20.72.8
       ip: 10.20.72.8
       access_ip: 10.20.72.8
       ansible_user: sysops
-      labels:
     node6:
       ansible_host: 10.20.72.9
       ip: 10.20.72.9
       access_ip: 10.20.72.9
       ansible_user: sysops
-      labels:
 
     node7:
       ansible_host: 10.20.75.62
